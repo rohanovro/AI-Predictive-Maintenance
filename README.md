@@ -247,7 +247,6 @@ AI-Predictive-Maintenance/
 - [ ] **Real-time streaming** — Apache Kafka + model serving (FastAPI / TorchServe)
 - [ ] **Anomaly detection** — complementary signal alongside RUL prediction
 - [ ] **Transfer learning** — generalize across C-MAPSS sub-datasets (FD002, FD003, FD004)
-- [ ] **Conference paper** — IEEE PHM / IEOM student track submission
 
 ---
 
