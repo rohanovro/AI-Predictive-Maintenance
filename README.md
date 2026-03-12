@@ -1,5 +1,7 @@
 # 🔧 AI-Driven Predictive Maintenance System
 ### NASA Turbofan Engine Degradation · Remaining Useful Life Prediction
+MAHMUDUL HASAN ROHAN 
+jashore university of science and technology
 
 ![Python](https://img.shields.io/badge/Python-3.12-blue?style=flat-square&logo=python)
 ![scikit-learn](https://img.shields.io/badge/scikit--learn-ML-orange?style=flat-square)
