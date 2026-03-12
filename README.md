@@ -180,6 +180,7 @@ Lower is better. Missing a failure is more dangerous than predicting early.
 
 ---
 
+```markdown
 ## 🖼 Visualizations
 
 12 professional plots generated in dark theme:
@@ -198,6 +199,43 @@ Lower is better. Missing a failure is more dangerous than predicting early.
 | **12** | **NASA PHM & GroupKFold** | **Official scoring function + leakage-free CV** |
 | **13** | **Uncertainty Intervals** | **Bootstrap 95%/80% PI, calibration curve, zone RMSE** |
 | **14** | **LSTM Architecture** | **NumPy 2-layer LSTM, per-engine results, R² comparison** |
+
+### Plot 01 — System Architecture
+![System Architecture](01_system_architecture.png)
+
+### Plot 02 — Sensor Analysis
+![Sensor Analysis](02_sensor_analysis.png)
+
+### Plot 03 — Correlation Heatmap
+![Correlation Heatmap](03_correlation_heatmap.png)
+
+### Plot 04 — Feature Engineering
+![Feature Engineering](04_feature_and_models.png)
+
+### Plot 05 — Predicted vs Actual
+![Predicted vs Actual](05_predicted_vs_actual.png)
+
+### Plot 06 — Feature Importance
+![Feature Importance](06_feature_importance.png)
+
+### Plot 07 — Maintenance Dashboard
+![Maintenance Dashboard](07_maintenance_dashboard.png)
+
+### Plot 08 — Final Summary
+![Final Summary](08_final_summary.png)
+
+### Plot 09 — Validation Analysis
+![Validation Analysis](09_validation_analysis.png)
+
+### Plot 12 — NASA PHM Scoring & GroupKFold CV
+![NASA PHM Scoring & GroupKFold](12_nasa_groupkfold.png)
+
+### Plot 13 — Bootstrap Uncertainty Intervals
+![Uncertainty Quantification](13_uncertainty.png)
+
+### Plot 14 — LSTM Architecture & Results
+![LSTM Architecture](14_lstm_arch.png)
+```
 
 ### Plot 12 — NASA PHM Scoring & GroupKFold CV
 ![NASA PHM Scoring & GroupKFold](12_nasa_groupkfold.png)
