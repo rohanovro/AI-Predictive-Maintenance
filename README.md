@@ -54,16 +54,6 @@ Industrial machines degrade over time. Unplanned failures cause:
 
 **Download:** [NASA Prognostics Data Repository](https://ti.arc.nasa.gov/tech/dash/groups/pcoe/prognostic-data-repository/)
 
-Each row represents one engine at one operational cycle:
-
-```
-engine_id | cycle | op_setting_1..3 | s1..s21 | RUL
-    1     |   1   |  100.0  5.0  0  | 489 604 ... | 249
-    1     |   2   |   90.0  4.8  1  | 490 606 ... | 248
-   ...    |  ...  |                 |             | ...
-    1     |  250  |  100.0  5.2  0  | 502 620 ... |   0  ← failure
-```
-
 ---
 
 ## 🏗 Project Architecture
@@ -77,29 +67,20 @@ Data Preprocessing
   · Remove constant sensors (s1, s5, s10, s16, s18, s19)
          ↓
 Feature Engineering
-  · Rolling mean per sensor (window = 10 cycles)   → features
-  · Rolling std deviation per sensor               → features
-  · Normalized cycle position (lifecycle %)        →  1 feature
-  · Aggregate health index                         →  1 feature
-  · Degradation rate proxy (nonlinear)             →  1 feature
-  · Operating conditions                           →  3 features
-  ─────────────────────────────────────────
+  · Rolling mean per sensor (window = 10 cycles)
+  · Rolling std deviation per sensor
+  · Normalized cycle position · Health index · Degradation rate
   Total: 37 engineered features
          ↓
 Machine Learning Models
-  · Linear Regression    (baseline)
-  · Random Forest        ← Best model (R² = 0.9398)
-  · Gradient Boosting
-  · LSTM (2-layer, pure NumPy)  ← Sequential temporal model
+  · Linear Regression  ·  Random Forest ★  ·  Gradient Boosting  ·  LSTM (NumPy)
          ↓
 Evaluation
-  · GroupKFold cross-validation  (no data leakage)
+  · GroupKFold cross-validation (no data leakage)
   · NASA PHM08 official scoring function
   · Bootstrap uncertainty intervals (95% & 80% PI)
          ↓
 RUL Prediction → Maintenance Optimization
-  · Urgency classification: CRITICAL / HIGH / MEDIUM / LOW
-  · Cost-aware scheduling (planned vs emergency costs)
 ```
 
 ---
@@ -124,16 +105,6 @@ python run_pipeline.py
 python upgraded_pipeline.py
 ```
 
-**requirements.txt:**
-```
-numpy>=1.24
-pandas>=2.0
-scikit-learn>=1.3
-matplotlib>=3.7
-seaborn>=0.12
-scipy>=1.10
-```
-
 ---
 
 ## 📈 Results
@@ -149,56 +120,22 @@ scipy>=1.10
 
 ★ **Best model:** Random Forest — RMSE = 9.95 cycles, R² = 0.9398, NASA Score = 1.9
 
-### Cross-Validation (GroupKFold — no data leakage)
+### GroupKFold Cross-Validation (no data leakage)
 
-| Model | CV RMSE | CV Std |
+| Model | CV RMSE | Std |
 |---|---|---|
 | Linear Regression | 11.67 | ±0.82 |
 | Random Forest | 10.24 | ±0.61 |
 | Gradient Boosting | 10.51 | ±0.68 |
 
-> **GroupKFold** ensures no engine ever appears in both train and validation fold — eliminating data leakage that inflates standard KFold scores.
-
-### Uncertainty Quantification
-
+### Uncertainty Quantification (Bootstrap)
 - **95% Prediction Interval coverage:** 90.0%
 - **80% Prediction Interval coverage:** 82.4%
-- Intervals are heteroscedastic — wider near failure (RUL → 0) where uncertainty is highest
-
-### NASA PHM08 Scoring Function
-
-The official competition metric penalises **late predictions more than early ones**:
-
-```
-d = predicted_RUL - actual_RUL
-
-score = exp(-d/13) - 1   if d < 0  (early warning — gentler penalty)
-      = exp( d/10) - 1   if d ≥ 0  (late  warning — harsher penalty)
-```
-
-Lower is better. Missing a failure is more dangerous than predicting early.
 
 ---
 
 ## 🖼 Visualizations
 
-12 professional plots generated in dark theme:
-
-| # | Figure | Description |
-|---|---|---|
-| 01 | System Architecture | Full pipeline diagram with performance metrics |
-| 02 | Sensor Analysis | Degradation curves, RUL distribution, variability ranking |
-| 03 | Correlation Heatmap | Sensor-sensor + sensor-RUL correlations |
-| 04 | Feature Engineering | Raw vs rolling stats, health index, model comparison |
-| 05 | Predicted vs Actual | Scatter plots for all models |
-| 06 | Feature Importance | Top 20 features + failure probability curve |
-| 07 | Maintenance Dashboard | Gantt schedule, urgency breakdown, cost analysis |
-| 08 | Final Summary | Error distribution, RUL timeline, savings vs reactive |
-| 09 | Validation Analysis | Residuals, per-engine RMSE, stability across seeds |
-| **12** | **NASA PHM & GroupKFold** | **Official scoring function + leakage-free CV** |
-| **13** | **Uncertainty Intervals** | **Bootstrap 95%/80% PI, calibration curve, zone RMSE** |
-| **14** | **LSTM Architecture** | **NumPy 2-layer LSTM, per-engine results, R² comparison** |
-
 ### Plot 01 — System Architecture
 ![System Architecture](01_system_architecture.png)
 
@@ -226,35 +163,11 @@ Lower is better. Missing a failure is more dangerous than predicting early.
 ### Plot 09 — Validation Analysis
 ![Validation Analysis](09_validation_analysis.png)
 
-### Plot 01 — System Architecture
-![System Architecture](01_system_architecture.png)
-
-### Plot 02 — Sensor Analysis
-![Sensor Analysis](02_sensor_analysis.png)
-
-### Plot 03 — Correlation Heatmap
-![Correlation Heatmap](03_correlation_heatmap.png)
-
-### Plot 04 — Feature Engineering & Models
-![Feature Engineering](04_feature_and_models.png)
-
-### Plot 05 — Predicted vs Actual
-![Predicted vs Actual](05_predicted_vs_actual.png)
-
-### Plot 06 — Feature Importance
-![Feature Importance](06_feature_importance.png)
-
-### Plot 07 — Maintenance Dashboard
-![Maintenance Dashboard](07_maintenance_dashboard.png)
-
-### Plot 08 — Final Summary
-![Final Summary](08_final_summary.png)
-
-### Plot 09 — Validation Analysis
-![Validation Analysis](09_validation_analysis.png)
+### Plot 10 — Comprehensive Evaluation
+![Comprehensive Evaluation](10_comprehensive_evaluation.png)
 
 ### Plot 12 — NASA PHM Scoring & GroupKFold CV
-![NASA PHM Scoring & GroupKFold](12_nasa_groupkfold.png)
+![NASA PHM Scoring](12_nasa_groupkfold.png)
 
 ### Plot 13 — Bootstrap Uncertainty Intervals
 ![Uncertainty Quantification](13_uncertainty.png)
@@ -276,15 +189,13 @@ def classify_urgency(predicted_rul, safety_margin=15):
     else:                           return 'LOW'       # monitor only
 ```
 
-**Cost Model:**
-
 | Action | Cost |
 |---|---|
 | Planned maintenance | $5,000 |
-| Emergency failure repair | $25,000 (5× more) |
+| Emergency failure repair | $25,000 (5×) |
 | Downtime (per day) | $3,000 |
 
-**Estimated savings** from AI-driven approach vs. reactive maintenance: **~$430,000** on a 20-engine fleet.
+**Estimated savings:** ~$430,000 on a 20-engine fleet.
 
 ---
 
@@ -293,9 +204,10 @@ def classify_urgency(predicted_rul, safety_margin=15):
 ```
 AI-Predictive-Maintenance/
 │
-├── generate_data.py              # NASA C-MAPSS data generator
-├── run_pipeline.py               # Original ML pipeline
-├── upgraded_pipeline.py          # Upgraded: LSTM + NASA score + GroupKFold + uncertainty
+├── generate_data.py                    # NASA C-MAPSS data generator
+├── run_pipeline.py                     # Original ML pipeline
+├── upgraded_pipeline.py                # Upgraded: LSTM + NASA score + GroupKFold
+├── requirements.txt
 │
 ├── 01_system_architecture.png
 ├── 02_sensor_analysis.png
@@ -306,61 +218,56 @@ AI-Predictive-Maintenance/
 ├── 07_maintenance_dashboard.png
 ├── 08_final_summary.png
 ├── 09_validation_analysis.png
-├── 12_nasa_groupkfold.png        # NEW: NASA PHM score + GroupKFold diagram
-├── 13_uncertainty.png            # NEW: Bootstrap prediction intervals
-├── 14_lstm_arch.png              # NEW: LSTM architecture & results
+├── 10_comprehensive_evaluation.png
+├── 12_nasa_groupkfold.png              # NEW
+├── 13_uncertainty.png                  # NEW
+├── 14_lstm_arch.png                    # NEW
 │
 ├── AI_Predictive_Maintenance_Report.html
-├── README.md
-└── requirements.txt
+└── README.md
 ```
 
 ---
 
 ## 🔑 Key Findings
 
-1. **GroupKFold prevents inflated scores** — Standard KFold leaks engine data across folds, giving ~2.5% optimistic R². GroupKFold with unseen engines gives honest estimates.
-
-2. **Random Forest is best overall** — RMSE = 9.95 cycles, R² = 0.9398, NASA PHM Score = 1.9 (lowest = best). Predicts failure within ±10 cycles on average.
-
-3. **LSTM captures temporal patterns** — Pure NumPy 2-layer LSTM achieves R² = 0.9284 with no deep learning framework. Sequential modelling adds robustness.
-
-4. **Uncertainty matters for safety** — Bootstrap 95% prediction intervals achieve 90% empirical coverage. Intervals widen near failure — exactly where caution is most needed.
-
-5. **NASA score reveals real-world performance** — RF achieves NASA score of 1.9 vs Linear Regression's 2.4. The asymmetric penalty shows RF avoids dangerous late predictions better.
-
-6. **AI reduces costs by 5×** — Proactive scheduling eliminates emergency repairs, delivering ~$430K savings on a 20-engine fleet.
+1. **GroupKFold prevents inflated scores** — Standard KFold leaks engine data, giving ~2.5% optimistic R². GroupKFold gives honest estimates with fully unseen engines.
+2. **Random Forest is best overall** — RMSE = 9.95 cycles, R² = 0.9398, NASA PHM Score = 1.9.
+3. **LSTM captures temporal patterns** — Pure NumPy 2-layer LSTM achieves R² = 0.9284 with no deep learning framework.
+4. **Uncertainty matters for safety** — Bootstrap 95% prediction intervals achieve 90% empirical coverage, widening near failure.
+5. **NASA score reveals real-world performance** — Asymmetric penalty shows RF avoids dangerous late predictions better than other models.
+6. **AI reduces costs by 5×** — Proactive scheduling delivers ~$430K savings on a 20-engine fleet.
 
 ---
 
 ## 🔮 Future Work
 
-- [x] **LSTM** — 2-layer NumPy LSTM implemented ✅
-- [x] **Uncertainty quantification** — Bootstrap prediction intervals ✅
-- [x] **GroupKFold CV** — Data leakage fixed ✅
-- [x] **NASA PHM scoring** — Official metric implemented ✅
-- [ ] **Transformer / Attention** — Self-attention over sensor sequences
-- [ ] **Real NASA data** — Download FD001-FD004 from NASA repository
-- [ ] **Real-time streaming** — Apache Kafka + FastAPI model serving
-- [ ] **Conference paper** — IEEE PHM / IEOM student track submission
+- [x] LSTM — 2-layer NumPy LSTM ✅
+- [x] Uncertainty quantification — Bootstrap prediction intervals ✅
+- [x] GroupKFold CV — Data leakage fixed ✅
+- [x] NASA PHM scoring — Official metric ✅
+- [ ] Transformer / Attention over sensor sequences
+- [ ] Real NASA FD001–FD004 dataset
+- [ ] Real-time streaming with FastAPI
+- [ ] IEEE PHM conference paper submission
 
 ---
 
 ## 📚 References
 
-1. Saxena, A. et al. (2008). *Damage propagation modeling for aircraft engine run-to-failure simulation.* NASA Ames Research Center.
-2. Heimes, F. O. (2008). *Recurrent neural networks for remaining useful life estimation.* IPHM Conference.
-3. Zheng, S. et al. (2017). *Long short-term memory network for remaining useful life estimation.* IPHM Conference.
-4. Ramasso, E. & Gouriveau, R. (2014). *Remaining useful life estimation by classification of predictions.* IEEE Trans. Reliability.
+1. Saxena, A. et al. (2008). *Damage propagation modeling for aircraft engine run-to-failure simulation.* NASA Ames.
+2. Heimes, F. O. (2008). *Recurrent neural networks for remaining useful life estimation.* IPHM.
+3. Zheng, S. et al. (2017). *Long short-term memory network for remaining useful life estimation.* IPHM.
+4. Ramasso, E. & Gouriveau, R. (2014). *Remaining useful life estimation.* IEEE Trans. Reliability.
 
 ---
 
 ## 👤 Author
 
-**Mahmudul Hasan Rohan** | Industrial & Production Engineering  
-🎓 Jashore University of Science and Technology  
+**Mahmudul Hasan Rohan** | Industrial & Production Engineering
+🎓 Jashore University of Science and Technology
 🔗 [GitHub](https://github.com/rohanovro)
 
 ---
 
-*This project was built as part of a graduate application portfolio demonstrating applied ML for industrial AI and prognostics health management (PHM).*
+*Built as part of a graduate application portfolio demonstrating applied ML for industrial AI and prognostics health management (PHM).*
