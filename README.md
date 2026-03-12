@@ -265,9 +265,8 @@ AI-Predictive-Maintenance/
 ## 👤 Author
 
 MAHMUDULHASAN ROHAN | 
+Jashore University Of  Science and Technology
 rohanovro756@gmail.com
 
 
----
 
-*This project was built as part of a PhD application portfolio demonstrating applied ML for industrial AI.*
