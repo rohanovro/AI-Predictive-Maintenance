@@ -249,7 +249,7 @@ AI-Predictive-Maintenance/
 - [ ] Transformer / Attention over sensor sequences
 - [ ] Real NASA FD001–FD004 dataset
 - [ ] Real-time streaming with FastAPI
-- [ ] IEEE PHM conference paper submission
+
 
 ---
 
