@@ -152,21 +152,18 @@ reportlab>=4.0
 
 ---
 
-## 🖼 Visualizations
+## Visualizations
 
-8 professional plots generated in dark theme:
-
-| # | Figure | Description |
-|---|---|---|
-| 01 | System Architecture | Full pipeline diagram with performance metrics |
-| 02 | Sensor Analysis | Degradation curves, RUL distribution, variability ranking |
-| 03 | Correlation Heatmap | Sensor-sensor + sensor-RUL correlations |
-| 04 | Feature Engineering | Raw vs rolling stats, health index, model comparison |
-| 05 | Predicted vs Actual | Scatter plots for all 4 models |
-| 06 | Feature Importance | Top 20 features + failure probability curve |
-| 07 | Maintenance Dashboard | Gantt schedule, urgency breakdown, cost analysis |
-| 08 | Final Summary | Error distribution, RUL timeline, savings vs reactive |
-| 09 | Validation Analysis | Residuals, per-engine RMSE, stability across seeds |
+![System Architecture](01_system_architecture.png)
+![Sensor Analysis](02_sensor_analysis.png)
+![Correlation Heatmap](03_correlation_heatmap.png)
+![Feature Engineering](04_feature_and_models.png)
+![Predicted vs Actual](05_predicted_vs_actual.png)
+![Feature Importance](06_feature_importance.png)
+![Maintenance Dashboard](07_maintenance_dashboard.png)
+![Final Summary](08_final_summary.png)
+![Validation Analysis](09_validation_analysis.png)
+![Comprehensive Evaluation](10_comprehensive_evaluation.png)
 
 ---
 
