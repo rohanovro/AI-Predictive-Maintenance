@@ -262,9 +262,9 @@ AI-Predictive-Maintenance/
 
 ## 👤 Author
 
-**Your Name** | Machine Learning Engineer  
-📧 your.email@university.edu  
-🔗 [LinkedIn](https://linkedin.com/in/your-profile) · [ResearchGate](https://researchgate.net)
+MAHMUDULHASAN ROHAN | 
+rohanovro756@gmail.com
+
 
 ---
 
