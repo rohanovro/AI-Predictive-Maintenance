@@ -107,7 +107,7 @@ python upgraded_pipeline.py
 
 ---
 
-## 📈 Results
+##  Results
 
 ### Model Comparison
 
@@ -118,7 +118,7 @@ python upgraded_pipeline.py
 | Gradient Boosting | 10.26 | 6.14 | 0.9360 | 2.0 |
 | LSTM (NumPy) | 10.85 | 7.26 | 0.9284 | 2.2 |
 
-★ **Best model:** Random Forest — RMSE = 9.95 cycles, R² = 0.9398, NASA Score = 1.9
+ **Best model:** Random Forest — RMSE = 9.95 cycles, R² = 0.9398, NASA Score = 1.9
 
 ### GroupKFold Cross-Validation (no data leakage)
 
@@ -134,7 +134,7 @@ python upgraded_pipeline.py
 
 ---
 
-## 🖼 Visualizations
+##  Visualizations
 
 ### Plot 01 — System Architecture
 ![System Architecture](01_system_architecture.png)
@@ -199,7 +199,7 @@ def classify_urgency(predicted_rul, safety_margin=15):
 
 ---
 
-## 📁 Repository Structure
+##  Repository Structure
 
 ```
 AI-Predictive-Maintenance/
@@ -229,7 +229,7 @@ AI-Predictive-Maintenance/
 
 ---
 
-## 🔑 Key Findings
+##  Key Findings
 
 1. **GroupKFold prevents inflated scores** — Standard KFold leaks engine data, giving ~2.5% optimistic R². GroupKFold gives honest estimates with fully unseen engines.
 2. **Random Forest is best overall** — RMSE = 9.95 cycles, R² = 0.9398, NASA PHM Score = 1.9.
@@ -242,10 +242,10 @@ AI-Predictive-Maintenance/
 
 ## 🔮 Future Work
 
-- [x] LSTM — 2-layer NumPy LSTM ✅
-- [x] Uncertainty quantification — Bootstrap prediction intervals ✅
-- [x] GroupKFold CV — Data leakage fixed ✅
-- [x] NASA PHM scoring — Official metric ✅
+- [x] LSTM — 2-layer NumPy LSTM 
+- [x] Uncertainty quantification — Bootstrap prediction intervals 
+- [x] GroupKFold CV — Data leakage fixed 
+- [x] NASA PHM scoring — Official metric 
 - [ ] Transformer / Attention over sensor sequences
 - [ ] Real NASA FD001–FD004 dataset
 - [ ] Real-time streaming with FastAPI
@@ -253,7 +253,7 @@ AI-Predictive-Maintenance/
 
 ---
 
-## 📚 References
+##  References
 
 1. Saxena, A. et al. (2008). *Damage propagation modeling for aircraft engine run-to-failure simulation.* NASA Ames.
 2. Heimes, F. O. (2008). *Recurrent neural networks for remaining useful life estimation.* IPHM.
