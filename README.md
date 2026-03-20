@@ -262,12 +262,15 @@ AI-Predictive-Maintenance/
 
 ---
 
-## 👤 Author
+##  Author
 
-**Mahmudul Hasan Rohan** | Industrial & Production Engineering
-🎓 Jashore University of Science and Technology
-🔗 [GitHub](https://github.com/rohanovro)
+**Mahmudul Hasan Rohan** | Final Year Industrial & Production Engineering
+🎓 Jashore University of Science and Technology (JUST), Bangladesh
+
+ rohanovro756@gmail.com
+ [LinkedIn](https://linkedin.com/in/mahmudul-hasan-rohan)
+ [GitHub](https://github.com/rohanovro)
 
 ---
 
-*Built as part of a graduate application portfolio demonstrating applied ML for industrial AI and prognostics health management (PHM).*
+
